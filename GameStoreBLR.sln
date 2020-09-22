@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStoreBLR", "GameStoreBLR\GameStoreBLR.csproj", "{358C3FEF-8C42-4FD9-AC99-E22A94F938EF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{47730A3D-CFA7-44C4-BFF7-D9B9CE73B723}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{E9006C77-E834-4CBA-8403-893B124AF8D6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{358C3FEF-8C42-4FD9-AC99-E22A94F938EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{358C3FEF-8C42-4FD9-AC99-E22A94F938EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{358C3FEF-8C42-4FD9-AC99-E22A94F938EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{358C3FEF-8C42-4FD9-AC99-E22A94F938EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47730A3D-CFA7-44C4-BFF7-D9B9CE73B723}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47730A3D-CFA7-44C4-BFF7-D9B9CE73B723}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47730A3D-CFA7-44C4-BFF7-D9B9CE73B723}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47730A3D-CFA7-44C4-BFF7-D9B9CE73B723}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9006C77-E834-4CBA-8403-893B124AF8D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9006C77-E834-4CBA-8403-893B124AF8D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9006C77-E834-4CBA-8403-893B124AF8D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9006C77-E834-4CBA-8403-893B124AF8D6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {403A87DD-8D2C-4ED8-9B0F-E7728520E6B1}
+	EndGlobalSection
+EndGlobal

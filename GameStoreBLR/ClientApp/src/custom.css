@@ -1,0 +1,35 @@
+/* Provide sufficient contrast against white background */
+body {
+    background: black;
+    color: white;
+}
+
+a {
+    color: #fff;
+}
+
+code {
+    color: #E01A76;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.NavBar {
+    display: flex;
+    justify-content: space-around;
+    height: 7vh;
+    background: none;
+    margin-bottom: 2vh;
+}
+
+.NavItem {
+    text-decoration: none;
+    font-size: 2.2vh;
+    color: white;
+    border: 1px solid red;
+    padding: 2vh;
+}
