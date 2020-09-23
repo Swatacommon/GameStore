@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DAL;
+﻿using System.Threading.Tasks;
 using GameStoreBLR.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-
+using Models;
 namespace GameStoreBLR.Controllers {
     [Route("api/[controller]")]
     [ApiController]
@@ -29,6 +24,12 @@ namespace GameStoreBLR.Controllers {
         public async Task<IActionResult> doGet(string name) {
             var blob = await _blobService.GetBlobAsync(name);
             return File(blob.Content, blob.ContentType);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> doPost([FromBody] UploadFileRequest request) {
+            await _blobService.UploadFileBlobAsync(request.FilePath, request.FileName);
+            return Ok();
         }
     }
 }

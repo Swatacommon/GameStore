@@ -34,7 +34,10 @@
         height: 42vh;
         max-width: 16vw;
         min-width: 16vw;
-        transition: 0.5s;
+        transition: 0.4s;
+        box-shadow: 1px 1px #ff0000, 3px 3px #0087ff, 5px 5px #acff3d, 6px 6px #ff0000, 8px 8px #0087ff, 10px 10px #acff3d;
+        -webkit-transform: translateX(-7px);
+        transform: translateX(-7px);
     }
 
     .gameCard:hover .gameCardInfo {

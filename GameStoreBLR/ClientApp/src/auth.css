@@ -3,6 +3,11 @@
     height: 100%;
 }
 
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 1; /* Firefox */
+}
+
 .background-image {
     position: fixed;
     z-index: -1;
@@ -46,20 +51,26 @@
             border: none;
             box-shadow: 0px -0.1vh 0px rgba(255, 255, 255, 1) inset;
             transition: ease-in-out 1s;
+            margin-left: 5vw;
         }
 
             #loginForm > div > input:focus {
                 border-radius: 0.2em;
                 outline: none;
-                padding-left: 14vh;
-                padding-right: 8vh;
+                padding-right: 13vh;
+                margin-left: 0vw;
+                padding-left: 5vw;
             }
 
-            #loginForm > div > input:valid {
 
-            }
+                #loginForm > div > input:focus::placeholder {
+                    opacity: 0;
+                    transition: 1s;
+                }
 
         #loginForm > div > label {
+            display: none;
+            transition: ease-in-out 1s;
         }
 
         #loginForm > div > #submitLogin {
@@ -70,3 +81,14 @@
             height: 50px;
             border-radius: 0.2em;
         }
+
+#submitLogin {
+    margin: 0 !important;
+    padding: 0 !important;
+    transition: .5s;
+}
+
+    #submitLogin:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 1px 10px rgba(255, 255, 255, 0.2);
+    }

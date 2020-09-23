@@ -19,15 +19,17 @@ export class Auth extends Component {
                     <div id="loginForm">
                         <div>
                             <label>Email</label><br />
-                            <input type="email" onChange={this.onChangeEmail.bind(this)} id="emailLogin" /> <br /><br />
+                            <input type="email" placeholder="Email" onChange={this.onChangeEmail.bind(this)} id="emailLogin" /> <br /><br />
                         </div>
                         <div>
                             <label>Password</label><br />
-                            <input type="password" onChange={this.onChangePassword.bind(this)} id="passwordLogin" />
+                            <input type="password" placeholder="Password" onChange={this.onChangePassword.bind(this)} id="passwordLogin" />
                         </div>
                         <div>
                             <br /><br />
                             <input type="submit" id="submitLogin" value="Login" />
+                            <br/>
+                            <a href="/">Back</a>
                         </div>
                     </div>
                     <div id="userInfo">
