@@ -9,6 +9,7 @@ namespace DAL {
         private IRepository<Games> _gameRepository;
         private IRepository<Users> _userRepository;
         private IRepository<Publishers> _publisherRepository;
+        private IRepository<RefreshTokens> _refreshTokensRepository;
 
         public UnitOfWork(GameStoreContext dbConext) {
             _dbContext = dbConext;
@@ -29,7 +30,11 @@ namespace DAL {
                 return _userRepository = _userRepository ?? new UserRepository(_dbContext);
             }
         }
-
+        public IRepository<RefreshTokens> RefreshTokensRepository {
+            get {
+                return _refreshTokensRepository = _refreshTokensRepository ?? new RefreshTokensRepository(_dbContext);
+            }
+        }
         public void Commit() {
             _dbContext.SaveChanges();
         }

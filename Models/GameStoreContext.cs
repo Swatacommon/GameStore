@@ -29,6 +29,7 @@ namespace Models
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Platforms> Platforms { get; set; }
         public virtual DbSet<Publishers> Publishers { get; set; }
+        public virtual DbSet<RefreshTokens> RefreshTokens { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -233,6 +234,25 @@ namespace Models
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<RefreshTokens>(entity =>
+            {
+                entity.HasKey(e => e.UserId);
+
+                entity.ToTable("Refresh_tokens");
+
+                entity.Property(e => e.UserId).ValueGeneratedNever();
+
+                entity.Property(e => e.Token)
+                    .IsRequired()
+                    .HasMaxLength(400);
+
+                entity.HasOne(d => d.User)
+                    .WithOne(p => p.RefreshTokens)
+                    .HasForeignKey<RefreshTokens>(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Refresh_tokens_Genres");
             });
 
             modelBuilder.Entity<Users>(entity =>

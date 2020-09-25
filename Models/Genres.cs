@@ -13,6 +13,7 @@ namespace Models
         public long Id { get; set; }
         public string Name { get; set; }
 
+        public virtual RefreshTokens RefreshTokens { get; set; }
         public virtual ICollection<GameGenres> GameGenres { get; set; }
     }
 }

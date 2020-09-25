@@ -18,7 +18,6 @@ namespace GameStoreBLR.Controllers {
             _unitOfWork = unitOfWork;
         }
 
-        //[Authorize(Roles="admin")]
         [HttpGet]
         public IEnumerable<Games> Get() {
             _logger.LogInformation(Environment.GetEnvironmentVariable("Get games"));

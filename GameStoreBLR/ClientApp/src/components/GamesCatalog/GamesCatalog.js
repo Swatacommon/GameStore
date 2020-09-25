@@ -1,40 +1,6 @@
 import React, { Component } from 'react';
-import "../gamesCatalog.css"
-
-class GameItem extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { image: null, loading: false };
-    }
-
-    static renderGameItem(game) {
-        let imgUrl = 'http://localhost:5329/api/images/' + game.gameImages[0].imageNameNavigation.name + game.gameImages[0].imageNameNavigation.format;
-        return (
-            <div className="gameCard">
-                <img src={imgUrl} className="gameCardImage" />
-                <div className="gameCardInfo">
-                    <div className="gameCardInfoShadow">
-                        <p>{game.name}</p>
-                        <p className="gameCardInfoPrice">{game.price}</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-
-    render() {
-        let contents = this.state.loading
-            ? <p><em>Loading...</em></p>
-            : GameItem.renderGameItem(this.props.game);
-
-        return (
-            <div>
-                {contents}
-            </div>
-        );
-    }
-}
+import "../../gamesCatalog.css";
+import { GameItem } from "./GameItem.js";
 
 export class GamesCatalog extends Component {
     static displayName = GamesCatalog.name;
