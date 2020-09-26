@@ -31,11 +31,11 @@ namespace DAL {
             return item;
         }
 
-        public Games GetById(double id) {
+        public Games GetById(long id) {
             return _dbContext.Games.Find(id);
         }
 
-        public Games RemoveById(double id) {
+        public Games RemoveById(long id) {
             var gameRemove = _dbContext.Games.Find(id);
             if (gameRemove == null)
                 return gameRemove;

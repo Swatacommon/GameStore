@@ -28,7 +28,7 @@ namespace DAL {
             return _dbContext.Users.Find(user.Email);
         }
 
-        public Users GetById(double id) {
+        public Users GetById(long id) {
             throw new NotImplementedException();
         }
 
@@ -36,7 +36,7 @@ namespace DAL {
             throw new NotImplementedException();
         }
 
-        public Users RemoveById(double item) {
+        public Users RemoveById(long item) {
             throw new NotImplementedException();
         }
 

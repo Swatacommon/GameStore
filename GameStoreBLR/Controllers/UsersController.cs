@@ -33,7 +33,7 @@ namespace GameStoreBLR.Controllers
 
         [Authorize]
         [HttpGet("{id}")]
-        public Games Get(double id) {
+        public Games Get(long id) {
             _logger.LogInformation($"Get user by id = {id}");
             return _unitOfWork.GameRepository.GetById(id);
         }

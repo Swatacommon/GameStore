@@ -9,8 +9,8 @@ namespace DAL {
         public IEnumerable<T> GetAllWithIncludes();
         public T Add(T item);
         public T Get(T item);
-        public T GetById(double id);
+        public T GetById(long id);
         public T Update(T item);
-        public T RemoveById(double id);
+        public T RemoveById(long id);
     }
 }

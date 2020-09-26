@@ -7,13 +7,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Models;
 
-namespace GameStoreBLR.Controllers
-{
+namespace GameStoreBLR.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderController : ControllerBase
-    {
+    public class OrderController : ControllerBase {
         private readonly ILogger<OrderController> _logger;
         private IUnitOfWork _unitOfWork;
 
@@ -23,10 +22,16 @@ namespace GameStoreBLR.Controllers
         }
 
         [Authorize]
-        [HttpPost("/AddToCart")]
+        [HttpGet("tocard/{id}")]
         public ActionResult AddToCart(string id) {
-            HttpContext.Session.SetString("Id", id);
-            return Ok();
+            if (id != null) {
+                if (long.TryParse(id, out long _id)) {
+                    Games game = _unitOfWork.GameRepository.GetById(_id);
+                    HttpContext.Session.SetString($"{game.Id}", game.Name);
+                    return Ok();
+                }
+            }
+            return Redirect(HttpContext.Request.Host + "/authorization");
         }
     }
 }

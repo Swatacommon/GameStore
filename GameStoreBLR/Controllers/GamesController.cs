@@ -25,13 +25,13 @@ namespace GameStoreBLR.Controllers {
         }
 
         [HttpGet("{id}")]
-        public Games Get(double id) {
+        public Games Get(long id) {
             _logger.LogInformation($"Get game by id = {id}");
             return _unitOfWork.GameRepository.GetById(id);
         }
 
         [HttpDelete]
-        public Games DeleteById(double id) {
+        public Games DeleteById(long id) {
             _logger.LogInformation($"Delete game by id = {id}");
             return _unitOfWork.GameRepository.RemoveById(id);
         }

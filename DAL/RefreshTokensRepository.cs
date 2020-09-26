@@ -23,11 +23,11 @@ namespace DAL {
             return item;
         }
 
-        public RefreshTokens GetById(double id) {
+        public RefreshTokens GetById(long id) {
             return _dbContext.RefreshTokens.Find(id);
         }
 
-        public RefreshTokens RemoveById(double id) {
+        public RefreshTokens RemoveById(long id) {
             var tokenRemove = _dbContext.RefreshTokens.Find(id);
             if (tokenRemove == null)
                 return tokenRemove;
