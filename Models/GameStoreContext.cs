@@ -244,6 +244,8 @@ namespace Models
 
                 entity.Property(e => e.UserId).ValueGeneratedNever();
 
+                entity.Property(e => e.ExpiryDate).HasColumnType("date");
+
                 entity.Property(e => e.Token)
                     .IsRequired()
                     .HasMaxLength(400);

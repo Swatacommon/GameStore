@@ -57,11 +57,6 @@ export class Auth extends Component {
         this.setState({ password: val });
     }
 
-    LogOut(e) {
-        sessionStorage.removeItem('tokenKey');
-        window.location.reload();
-    }
-
     async SignIn(e) {
         e.preventDefault();
         // получаем данные формы и фомируем объект для отправки
@@ -84,7 +79,7 @@ export class Auth extends Component {
         if (response.ok === true) {
             // сохраняем в хранилище sessionStorage токен доступа
             sessionStorage.setItem('tokenKey', user.access_token);
-            window.location.href = "/";
+            this.setState({ logged: true });
         }
         if (response.status === 400) {
             console.log('Bad request');

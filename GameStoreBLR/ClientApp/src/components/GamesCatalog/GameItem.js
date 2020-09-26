@@ -2,15 +2,21 @@
 export class GameItem extends Component {
     constructor(props) {
         super(props);
-        this.state = { image: null, loading: false, haha: 'lol' };
-        this.pressDetails = this.pressDetails.bind(this);
+        this.state = { image: null, loading: false };
+
+        this.addToCard = this.addToCard.bind(this);
     }
 
-    static renderGameItem(game, haha) {
+    addToCard(e) {
+        console.log(e);
+        alert(e);
+    }
+
+    static renderGameItem(game, addToCard) {
         let imgUrl = 'http://localhost:5329/api/images/' + game.gameImages[0].imageNameNavigation.name + game.gameImages[0].imageNameNavigation.format;
         return (
             <div className="gameCard">
-                <input type="button" value="Add to cart" className="orderButton" />
+                <input type="button" value="Add to cart" key={game.id} className="orderButton" onClick={addToCard} />
                 <img src={imgUrl} className="gameCardImage" />
                 <div className="gameCardInfo">
                     <div className="gameCardInfoShadow">
@@ -22,15 +28,10 @@ export class GameItem extends Component {
         )
     }
 
-
-    pressDetails(e) {
-
-    }
-
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : GameItem.renderGameItem(this.props.game, this.state.haha);
+            : GameItem.renderGameItem(this.props.game, this.addToCard);
 
         return (
             <div>

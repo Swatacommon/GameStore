@@ -26,7 +26,9 @@ namespace GameStoreBLR.Controllers {
         [HttpPost("/accesstoken")]
         public string Generate_Access_Token(string email, string password) {
             _logger.LogInformation($"Request - email:{email} password:{password}");
+
             long? userId = null;
+
             var identity = GetIdentity(email, password, out userId);
 
             if (identity == null) {
@@ -80,7 +82,7 @@ namespace GameStoreBLR.Controllers {
 
         private ClaimsIdentity GetIdentity(string email, string password, out long? userId) {
             Users user = _unitOfWork.UserRepository.GetAll().FirstOrDefault(x => x.Email == email && x.Password == password);
-            userId = user.Id;
+            userId = user?.Id;
             if (user != null) {
                 var claims = new List<Claim>
                 {
