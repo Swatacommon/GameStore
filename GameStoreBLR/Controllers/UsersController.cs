@@ -9,12 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Models;
 
-namespace GameStoreBLR.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UsersController : ControllerBase
-    {
+namespace GameStoreBLR.Controllers {
+    public class UsersController : ControllerBase {
 
         private readonly ILogger<UsersController> _logger;
         private readonly IUnitOfWork _unitOfWork;
@@ -33,9 +29,16 @@ namespace GameStoreBLR.Controllers
 
         [Authorize]
         [HttpGet("{id}")]
-        public Games Get(long id) {
+        public Users Get(long id) {
             _logger.LogInformation($"Get user by id = {id}");
-            return _unitOfWork.GameRepository.GetById(id);
+            return _unitOfWork.UserRepository.GetById(id);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("/signup")]
+        public Users Add(string login, string email, string password) {
+            _logger.LogInformation($"Register user");
+            return _unitOfWork.UserRepository.Add(new Users() { Login = login, Email = email, Password = password});
         }
     }
 }

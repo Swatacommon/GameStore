@@ -13,7 +13,8 @@ namespace DAL {
         }
 
         public Users Add(Users item) {
-            throw new NotImplementedException();
+            _dbContext.Users.Add(item);
+            return item;
         }
 
         public IEnumerable<Users> GetAll() {

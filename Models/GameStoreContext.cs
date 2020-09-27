@@ -273,7 +273,8 @@ namespace Models
 
                 entity.Property(e => e.Role)
                     .IsRequired()
-                    .HasMaxLength(150);
+                    .HasMaxLength(150)
+                    .HasDefaultValueSql("(N'users')");
             });
 
             OnModelCreatingPartial(modelBuilder);
