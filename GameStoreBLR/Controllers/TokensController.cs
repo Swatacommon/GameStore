@@ -23,8 +23,8 @@ namespace GameStoreBLR.Controllers {
             _unitOfWork = unitOfWork;
         }
 
-        [HttpPost("/accesstoken")]
-        public string Generate_Access_Token(string email, string password) {
+        [HttpPost("/tokens")]
+        public string Generate_Tokens(string email, string password) {
             _logger.LogInformation($"Request - email:{email} password:{password}");
 
             long? userId = null;
@@ -39,18 +39,10 @@ namespace GameStoreBLR.Controllers {
 
             var now = DateTime.UtcNow;
 
-            // создаем JWT-Access-токен
-            var jwt_access = new JwtSecurityToken(
-                    issuer: AuthOptions.ISSUER,
-                    audience: AuthOptions.AUDIENCE,
-                    notBefore: now,
-                    claims: identity.Claims,
-                    expires: now.Add(TimeSpan.FromMinutes(AuthOptions.ACCESS_TOKEN_LIFETIME)),
-                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+            var encodedAccessToken = Generate_Access_Token(identity);
 
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt_access);
-            var encodedRefreshToken = Generate_Refresh_Token();
-            _unitOfWork.RefreshTokensRepository.Add(new RefreshTokens() { UserId = (long)userId, Token = encodedRefreshToken });
+            var encodedRefreshToken = Generate_Refresh_Token((long)userId, email);
+
             HttpContext.Response.Cookies.Append(
                 "Refresh_token",
                 encodedRefreshToken,
@@ -60,17 +52,33 @@ namespace GameStoreBLR.Controllers {
                 );
 
             var response = new {
-                access_token = encodedJwt,
+                access_token = encodedAccessToken,
                 email = identity.Name
             };
 
             return JsonSerializer.Serialize(response);
         }
 
-        public string Generate_Refresh_Token() {
+        private string Generate_Access_Token(ClaimsIdentity identity) {
+            var now = DateTime.UtcNow;
+
+            // создаем JWT-Access-токен
+            var jwt_access = new JwtSecurityToken(
+                    issuer: AuthOptions.ISSUER,
+                    audience: AuthOptions.AUDIENCE,
+                    notBefore: now,
+                    claims: identity.Claims,
+                    expires: now.Add(TimeSpan.FromMinutes(AuthOptions.ACCESS_TOKEN_LIFETIME)),
+                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+
+            return new JwtSecurityTokenHandler().WriteToken(jwt_access);
+        }
+
+        private string Generate_Refresh_Token(long userId, string email) {
             var randomNumber = new byte[32];
             using (var rng = RandomNumberGenerator.Create()) {
                 rng.GetBytes(randomNumber);
+                _unitOfWork.RefreshTokensRepository.Add(new RefreshTokens() { UserId = (long)userId, Token = Convert.ToBase64String(randomNumber), ExpiryDate = DateTime.UtcNow.AddDays(31) });
                 return Convert.ToBase64String(randomNumber);
             }
         }

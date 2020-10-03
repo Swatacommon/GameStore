@@ -20,6 +20,7 @@ namespace DAL {
 
         public RefreshTokens Add(RefreshTokens item) {
             _dbContext.RefreshTokens.Add(item);
+            _dbContext.SaveChangesAsync();
             return item;
         }
 

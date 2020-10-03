@@ -1,8 +1,6 @@
 ﻿import React, { Component } from 'react';
 import '../../auth.css';
 import { Redirect } from 'react-router-dom';
-import { Button } from 'reactstrap';
-import register from '../../registerServiceWorker';
 
 export class Auth extends Component {
     static displayName = Auth.name;
@@ -14,58 +12,62 @@ export class Auth extends Component {
             logged: false, errorMessage: '', registration: "login no",
             authButton: "Login", regButton: "Registration"
         };
+        this.signIn = this.SignIn.bind(this);
+        this.signUp = this.SignUp.bind(this);
     }
 
     componentWillMount() {
-        if (sessionStorage.getItem('tokenKey')) {
-            this.setState({ logged: true });
+        const token = sessionStorage.getItem('tokenKey');
+        console.log(token);
+        if (token === undefined || token === null) {
+            this.setState({ logged: false })
+        } else {
+            this.setState({ logged: true })
         }
     }
 
     render() {
-        if (this.state.logged == false) {
-            return (
-                <div className="authForm">
-                    <div className="background-image"></div>
-                    <form onSubmit={this.state.registration == 'login no' ? this.SignIn.bind(this) : this.SignUp.bind(this)}>
-                        <div id="loginForm">
-                            <label className="errorMessage">{this.state.errorMessage}</label>
-                            <div className={this.state.registration}>
-                                <label>Login</label><br />
-                                <input type="text" placeholder="Login" onChange={this.onChangeLogin.bind(this)} id="inputLogin" /> <br /><br />
-                            </div>
-                            <div>
-                                <label>Email</label><br />
-                                <input type="email" placeholder="Email" onChange={this.onChangeEmail.bind(this)} id="emailLogin" /> <br /><br />
-                            </div>
-                            <div>
-                                <label>Password</label><br />
-                                <input type="password" placeholder="Password" onChange={this.onChangePassword.bind(this)} id="passwordLogin" />
-                            </div>
-                            <div>
-                                <br /><br />
-                                <input type="submit" id="submitLogin" value={this.state.authButton} />
-                                <br />
-                                <div className="authFormBottomMenu">
-                                    <a href="/">Back</a>
-                                    <input type="button" value={this.state.regButton} onClick={this.onRegistration.bind(this)} />
-                                </div>
+        if (this.state.logged !== false) {
+                return <Redirect to="/" />
+        }
+        return (
+            <div className="authForm">
+                <div className="background-image"></div>
+                <form onSubmit={this.state.registration === 'login no' ? this.signIn : this.signUp}>
+                    <div id="loginForm">
+                        <label className="errorMessage">{this.state.errorMessage}</label>
+                        <div className={this.state.registration}>
+                            <label>Login</label><br />
+                            <input type="text" placeholder="Login" onChange={this.onChangeLogin.bind(this)} id="inputLogin" /> <br /><br />
+                        </div>
+                        <div>
+                            <label>Email</label><br />
+                            <input type="email" placeholder="Email" onChange={this.onChangeEmail.bind(this)} id="emailLogin" /> <br /><br />
+                        </div>
+                        <div>
+                            <label>Password</label><br />
+                            <input type="password" placeholder="Password" onChange={this.onChangePassword.bind(this)} id="passwordLogin" />
+                        </div>
+                        <div>
+                            <br /><br />
+                            <input type="submit" id="submitLogin" value={this.state.authButton} />
+                            <br />
+                            <div className="authFormBottomMenu">
+                                <a href="/">Back</a>
+                                <input id="registerButton" type="button" value={this.state.regButton} onClick={this.onRegistration.bind(this)} />
                             </div>
                         </div>
-                    </form>
-                </div>
-            );
-        } else {
-            return <Redirect to="/" />
-        }
+                    </div>
+                </form>
+            </div>
+        );
     }
 
     onRegistration(e) {
-        var val = e.target.value;
         this.setState({
-            registration: this.state.registration == 'login' ? 'login no' : 'login',
-            regButton: this.state.registration == 'login' ? 'Registration' : 'Login',
-            authButton: this.state.registration == 'login' ? 'Login' : 'Registration',
+            registration: this.state.registration === 'login' ? 'login no' : 'login',
+            regButton: this.state.registration === 'login' ? 'Registration' : 'Login',
+            authButton: this.state.registration === 'login' ? 'Login' : 'Registration',
         });
     }
 
@@ -93,7 +95,7 @@ export class Auth extends Component {
         formData.append("password", this.state.password);
         console.log('email: ', this.state.email);
         console.log('password: ', this.state.password);
-        const response = await fetch("/accesstoken", {
+        const response = await fetch("/tokens", {
             method: "POST",
             headers: { "Accept": "application/json" },
             body: formData
@@ -133,13 +135,9 @@ export class Auth extends Component {
             body: formData
         });
 
-        //const data = await response.json();
-        //let user = JSON.parse(data);
-
         // если запрос прошел нормально
         if (response.ok === true) {
             // сохраняем в хранилище sessionStorage токен доступа
-            // sessionStorage.setItem('tokenKey', user.access_token);
             this.setState({ logged: true });
         }
         if (response.status === 400) {

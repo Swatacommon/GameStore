@@ -30,7 +30,7 @@ namespace DAL {
         }
 
         public Users GetById(long id) {
-            throw new NotImplementedException();
+            return _dbContext.Users.Find(id);
         }
 
         public Users RemoveBy(Users item) {

@@ -17,6 +17,10 @@ namespace DAL {
         public IRepository<RefreshTokens> RefreshTokensRepository {
             get;
         }
+        public IRepository<Orders> OrderRepository {
+            get;
+        }
+
         void Commit();
         void Rollback();
     }

@@ -30,7 +30,7 @@ namespace GameStoreBLR.Controllers {
             return _unitOfWork.GameRepository.GetById(id);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public Games DeleteById(long id) {
             _logger.LogInformation($"Delete game by id = {id}");
             return _unitOfWork.GameRepository.RemoveById(id);

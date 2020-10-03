@@ -33,7 +33,7 @@ export class GameItem extends Component {
         return (
             <div className="gameCard">
                 <input type="button" value={orderState} key={game.id} className="orderButton" onClick={() => addToCard(game.id)} />
-                <img src={imgUrl} className="gameCardImage" />
+                <img alt="GameImage" src={imgUrl} className="gameCardImage" />
                 <div className="gameCardInfo">
                     <div className="gameCardInfoShadow">
                         <p>{game.name}</p>

@@ -12,11 +12,11 @@ export class Profile extends Component {
     }
 
     componentWillMount() {
-        this.getUserInfo();
+        //this.getUserInfo();
     }
 
     render() {
-        if (this.state.logged == true) {
+        if (this.state.logged === true) {
             return (
                 <div>
                     <p>PROFILE</p>
@@ -36,7 +36,7 @@ export class Profile extends Component {
     async getUserInfo(e) {
         const token = sessionStorage.getItem("tokenKey");
 
-        const response = await fetch("/api/users", {
+        const response = await fetch("/api/orders", {
             method: "GET",
             headers: {
                 "Accept": "application/json",
@@ -45,7 +45,7 @@ export class Profile extends Component {
         });
         if (response.ok === true) {
 
-            const data = await response.json();
+            //const data = await response.json();
         }
         else {
             this.setState({ logged: false })

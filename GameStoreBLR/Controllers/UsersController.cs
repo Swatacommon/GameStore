@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DAL;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Models;
@@ -20,25 +17,27 @@ namespace GameStoreBLR.Controllers {
             _unitOfWork = unitOfWork;
         }
 
+
+        [HttpGet("users")]
         [Authorize]
-        [HttpGet]
         public IEnumerable<Users> Get() {
-            _logger.LogInformation(Environment.GetEnvironmentVariable("Get users"));
+            _logger.LogInformation("Get users");
             return _unitOfWork.UserRepository.GetAll();
         }
 
-        [Authorize]
-        [HttpGet("{id}")]
+        [HttpGet("users/{id}")]
+        [Authorize] 
         public Users Get(long id) {
             _logger.LogInformation($"Get user by id = {id}");
             return _unitOfWork.UserRepository.GetById(id);
         }
 
-        [AllowAnonymous]
         [HttpPost("/signup")]
         public Users Add(string login, string email, string password) {
             _logger.LogInformation($"Register user");
-            return _unitOfWork.UserRepository.Add(new Users() { Login = login, Email = email, Password = password});
+            var newUser = _unitOfWork.UserRepository.Add(new Users() { Login = login, Email = email, Password = password });
+            _unitOfWork.Commit();
+            return newUser;
         }
     }
 }

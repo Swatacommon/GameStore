@@ -1,27 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using DAL;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Models;
 
 namespace GameStoreBLR.Controllers {
-    [Route("api/[controller]")]
     [ApiController]
-    public class OrderController : ControllerBase {
-        private readonly ILogger<OrderController> _logger;
+    [Route("api/[controller]")]
+    public class OrdersController : ControllerBase {
+        private readonly ILogger<OrdersController> _logger;
         private IUnitOfWork _unitOfWork;
 
-        public OrderController(ILogger<OrderController> logger, IUnitOfWork unitOfWork) {
+        public OrdersController(ILogger<OrdersController> logger, IUnitOfWork unitOfWork) {
             _logger = logger;
             _unitOfWork = unitOfWork;
         }
 
-        [Authorize]
+        [HttpGet]
+        public IEnumerable<Orders> GetOrders() {
+            _logger.LogInformation("GetUserOrders");
+            string idStr = HttpContext.Session.GetString("UserId");
+            long.TryParse(idStr, out long id);
+            return _unitOfWork.OrderRepository.GetAll().Where(order => order.UserId == id);
+        }
         [HttpGet("tocard/{id}")]
         public ActionResult AddToCart(string id) {
             if (id != null) {

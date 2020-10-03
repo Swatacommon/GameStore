@@ -26,19 +26,12 @@ namespace GameStoreBLR {
         public void ConfigureServices(IServiceCollection services) {
             services.AddDistributedMemoryCache();
 
-            services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromMinutes(15);
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
-            });
-
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
               options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddSingleton(x => new BlobServiceClient(Configuration.GetValue<string>("AzureBlobStorageConntectionString")));
             services.AddSingleton<IBlobService, BlobService>();
-            
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                   .AddJwtBearer(options => {
                       options.RequireHttpsMetadata = false;
@@ -60,6 +53,13 @@ namespace GameStoreBLR {
                           ValidateIssuerSigningKey = true,
                       };
                   });
+
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(15);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
 
             services.AddScoped<GameStoreContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -84,10 +84,10 @@ namespace GameStoreBLR {
 
             app.UseRouting();
 
+            app.UseSession();
+
             app.UseAuthentication();
             app.UseAuthorization();
-
-            app.UseSession();
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllerRoute(

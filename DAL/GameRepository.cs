@@ -7,7 +7,7 @@ using System.Text;
 namespace DAL {
     public class GameRepository : IRepository<Games> {
 
-        GameStoreContext _dbContext;
+        private GameStoreContext _dbContext;
         public GameRepository(GameStoreContext dbContext) {
             _dbContext = dbContext;
         }
